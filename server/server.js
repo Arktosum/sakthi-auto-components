@@ -22,3 +22,19 @@ server.listen(PORT,(name)=>{
 })
 
 // Do NOT forget to restart server after making changes here.
+
+
+// SQL STUFF ----------------------------------------------------
+
+let sql = require('mysql')
+
+let con = sql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "shiine1984"  // Do not look at my password creep.
+})
+
+con.connect(function(err) {
+  if (err) throw err;
+  console.log("Connected!");
+});

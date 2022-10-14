@@ -5,7 +5,7 @@ let con = sql.createConnection({
   user: "root",
   port: "4040", // must be in string. ;-;
   database:"db",
-  password: "shiine1984"  // Do not look at my password creep.
+  password: "***"  // Do not look at my password creep.
 })
 
 con.connect((err)=>{

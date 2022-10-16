@@ -9,3 +9,4 @@ thus adding a temporary insert feature to insert into SQL in detailViewer.
 16-10-2022
 
 Converted from MySQL to SQLite3,  which is a in-memory file based database.
+Install node packages only inside server folder to avoid clutter.

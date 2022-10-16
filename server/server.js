@@ -1,7 +1,9 @@
 // Local Server using Express.js
 
 let express = require('express')
+const sqlite3 = require('sqlite3').verbose();
 
+let DBpath = './database.db'
 // CORS is required for localhost accessing.
 let server = express()
 let cors = require('cors')
@@ -16,7 +18,7 @@ server.get('/',(req,res)=>{
 })
 server.post('/',(req,res)=>{
   let data = req.body
-  let db = connectDB('server\\database.db')
+  let db = connectDB(DBpath)
   queryAll(db,`INSERT INTO EMPLOYEES VALUES (${data.ID},'${data.name}','${data.designation}')`,(data)=>{
     console.log("Inserted 1 data.");
   }) // do NOT forget '' for VARCHAR inputs.
@@ -26,8 +28,6 @@ server.post('/',(req,res)=>{
 server.listen(PORT,(name)=>{
     console.log(`Server is live on http://localhost:${PORT}`);
 })
-
-const sqlite3 = require('sqlite3').verbose();
 
 function connectDB(path,mode=undefined) {  // Mode is OPEN_READWRITE | OPEN_CREATE if not exists by default.
   let db = new sqlite3.Database(path, (err) => {
@@ -57,7 +57,7 @@ function queryAll(db,sql,callback){
 // Failing constraints like ID's PRIMARY KEY constraint throws a SQLITE_CONSTRAINT error.
 
 function displayTable(tableName){
-  let db = connectDB('server\\database.db')
+  let db = connectDB(DBpath)
   queryAll(db,`SELECT * FROM ${tableName}`,(data)=>{
     console.log(data);
   })

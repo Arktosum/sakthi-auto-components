@@ -1,3 +1,0 @@
-closeDB(db)
-
-

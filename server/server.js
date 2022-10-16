@@ -1,18 +1,4 @@
 // Local Server using Express.js
-let sql = require('mysql')
-let con = sql.createConnection({
-  host: "localhost",
-  user: "root",
-  port: "4040", // must be in string. ;-;
-  database:"db",
-  password: "***"  // Do not look at my password creep.
-})
-
-con.connect((err)=>{
-  if (err) throw err;
-  console.log("Connected to SQL Successfully!");
-});
-
 
 let express = require('express')
 
@@ -30,44 +16,60 @@ server.get('/',(req,res)=>{
 })
 server.post('/',(req,res)=>{
   let data = req.body
-  // SQLquery(con,
-  //   `INSERT INTO employees (id,name,designation) VALUES (${data.ID},'${data.name}','${data.designation}')`,
-  //   'Inserted 1 record!'
-  //   )
-  SQLquery(con,
-    `SELECT * FROM employees`,
-    'Success!',
-    (rp)=>{
-      console.log("hello");
-      console.log(rp)
-    }
-    )
-
+  let db = connectDB('server\\database.db')
+  queryAll(db,`INSERT INTO EMPLOYEES VALUES (${data.ID},'${data.name}','${data.designation}')`,(data)=>{
+    console.log("Inserted 1 data.");
+  }) // do NOT forget '' for VARCHAR inputs.
+  closeDB(db)
+  displayTable("EMPLOYEES")
 })
 server.listen(PORT,(name)=>{
     console.log(`Server is live on http://localhost:${PORT}`);
 })
 
+const sqlite3 = require('sqlite3').verbose();
+
+function connectDB(path,mode=undefined) {  // Mode is OPEN_READWRITE | OPEN_CREATE if not exists by default.
+  let db = new sqlite3.Database(path, (err) => {
+    if (err) {
+      return console.error(err.message);
+    }
+    console.log('Connected to the in-memory SQlite database.');
+  });
+  return db
+}
+function closeDB(db){
+  db.close((err) => {
+    if (err) {
+      console.error(err.message);
+    }
+    console.log('Closed the database connection.');
+  });
+}
+function queryAll(db,sql,callback){
+  // Query all will query and return every row at the same time.
+  // other types of queries : each (gives row by row control) , get (gives first row control)
+  db.all(sql,(err,rows)=>{
+    if(err){throw err}
+    callback(rows)
+  })
+}
+// Failing constraints like ID's PRIMARY KEY constraint throws a SQLITE_CONSTRAINT error.
+
+function displayTable(tableName){
+  let db = connectDB('server\\database.db')
+  queryAll(db,`SELECT * FROM ${tableName}`,(data)=>{
+    console.log(data);
+  })
+  closeDB(db)
+}
+
+displayTable("EMPLOYEES")
 // Do NOT forget to restart server after making changes here.
 
 
 // SQL STUFF ----------------------------------------------------
 
-
-
-
-// Using Legacy 5.x Encryption. May lead to security vulnerabilities.
-
-
-
-// Helper function to deal with queries.
-function SQLquery(con,query,logMessage=undefined,resFunc=undefined) {
-  con.query(query,(err,res)=>{
-      if (err) throw err;
-      if(logMessage) console.log(logMessage)
-      if(resFunc) resFunc(res)
-  });
-}
 
 // Common SQL Queries
 // CREATE DATABASE _DATABASE_NAME

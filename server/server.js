@@ -19,7 +19,13 @@ server.get('/',(req,res)=>{
 server.post('/',(req,res)=>{
   let data = req.body
   let db = connectDB(DBpath)
-  queryAll(db,`INSERT INTO EMPLOYEES VALUES (${data.ID},'${data.name}','${data.designation}')`,(data)=>{
+  queryAll(db,`INSERT INTO EMPLOYEES VALUES (${data.ID},'${data.name}','${data.designation}')`,(err,data)=>{
+    if(err && err.message == "SQLITE_CONSTRAINT: UNIQUE constraint failed: EMPLOYEES.id"){
+      res.send({"error" : -1});
+    }
+    else{
+      res.send({"error" : 0})
+    }
     console.log("Inserted 1 data.");
   }) // do NOT forget '' for VARCHAR inputs.
   closeDB(db)
@@ -31,7 +37,7 @@ server.listen(PORT,(name)=>{
 
 function connectDB(path,mode=undefined) {  // Mode is OPEN_READWRITE | OPEN_CREATE if not exists by default.
   let db = new sqlite3.Database(path, (err) => {
-    if (err) {
+    if (err){
       return console.error(err.message);
     }
     console.log('Connected to the in-memory SQlite database.');
@@ -50,8 +56,7 @@ function queryAll(db,sql,callback){
   // Query all will query and return every row at the same time.
   // other types of queries : each (gives row by row control) , get (gives first row control)
   db.all(sql,(err,rows)=>{
-    if(err){throw err}
-    callback(rows)
+    callback(err,rows)
   })
 }
 // Failing constraints like ID's PRIMARY KEY constraint throws a SQLITE_CONSTRAINT error.
@@ -64,9 +69,12 @@ function displayTable(tableName){
   closeDB(db)
 }
 
-displayTable("EMPLOYEES")
-// Do NOT forget to restart server after making changes here.
+// function delete_record(tableName, id){
+//   let db = connectDB(DBpath)
+//   queryAll(db, `DELETE FROM ${tableName} WHERE id = ${id}`)
+// }
 
+// Do NOT forget to restart server after making changes here.
 
 // SQL STUFF ----------------------------------------------------
 

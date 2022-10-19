@@ -11,13 +11,12 @@ dbForm.addEventListener('submit',(e)=>{
         },
         body : JSON.stringify(data)
     }
-    fetch("http://localhost:8080/",postOptions).then((res)=>res.json()).then((data)=>{
-        console.log(data)
-        if(data["error"] == -1){
-            alert("User already exists!")
-        }
-        else if (data["error"] == 0){
-            alert("User created successfully!")
+    fetch("http://localhost:8080/signup",postOptions).then((res)=>res.json()).then((data)=>{
+        switch(data.error){
+            case 0 : alert("Successfully created account!");
+                    break;
+            case -1: alert("Account Already Exists!")
+                    break;
         }
     })
 })

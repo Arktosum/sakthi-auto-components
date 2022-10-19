@@ -21,26 +21,26 @@ function queryAll(db,sql,callback){
     // Query all will query and return every row at the same time.
     // other types of queries : each (gives row by row control) , get (gives first row control)
     db.all(sql,(err,rows)=>{
-      if(err){throw err}
-      callback(rows)
+      callback(err,rows)
     })
   }
   // Failing constraints like ID's PRIMARY KEY constraint throws a SQLITE_CONSTRAINT error.
   
 function displayTable(tableName,path){
     let db = connectDB(path)
-    queryAll(db,`SELECT * FROM ${tableName}`,(data)=>{
+    queryAll(db,`SELECT * FROM ${tableName}`,(err,data)=>{
       console.log(data);
     })
     closeDB(db)
 }
-module.exports = { connectDB,closeDB,queryAll,displayTable};
+module.exports = { connectDB,closeDB,queryAll,displayTable };
   // Do NOT forget to restart server after making changes here.
   
   
   // SQL STUFF ----------------------------------------------------
   
 /*
+  
   Common SQL Queries
   CREATE DATABASE _DATABASE_NAME
   Once we create a database, use the database name to connect to it specifically.
@@ -56,6 +56,5 @@ module.exports = { connectDB,closeDB,queryAll,displayTable};
 
   Employees
     ID       |     Name      | Designation  |   Password ( sha256 hashed)
-  
 
 */

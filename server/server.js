@@ -4,7 +4,7 @@ let express = require('express')
 let sql = require('./sql')
 let hash = require('./hashing')
 
-let DBpath = './database.db'
+let DBpath = 'server\\database.db'
 // CORS is required for localhost accessing.
 let server = express()
 let cors = require('cors')
@@ -22,22 +22,29 @@ server.get('/',(req,res)=>{
 
 
 
-server.post('/',(req,res)=>{
+server.post('/signup',(req,res)=>{
   let data = req.body
-  console.log(data)
   let db = sql.connectDB(DBpath)
-  sql.queryAll(db,`INSERT INTO EMPLOYEES VALUES (${data.ID},'${data.name}','${data.designation}','${hash.hash("sha256",data.pass)}')`,(DATA)=>{
-    console.log("Inserted 1 data.",DATA);
-  }) // do NOT forget '' for VARCHAR inputs.
+  sql.queryAll(db,`INSERT INTO EMPLOYEES VALUES (${data.ID},'${data.name}','${data.designation}','${hash.hash("sha256",data.pass)}')`,(err,DATA)=>{
+    if(err && err.errno === 19 ){ // err.code = SQLITE_CONSTRAINT
+      res.send({error : -1})
+    }
+    else{
+      res.send({error :  0})
+    }
+  })
+  // do NOT forget '' for VARCHAR inputs.
   sql.closeDB(db)
   sql.displayTable("EMPLOYEES",DBpath)
 })
+
 
 server.post('/login',(req, res)=>{
     let data = req.body
     let hashed = hash.hash("sha256",data.pass)
     let db = sql.connectDB(DBpath)
-    sql.queryAll(db,`SELECT * FROM EMPLOYEES WHERE NAME = '${data.name}' AND PASSWORD = '${hashed}'`,(DATA)=>{
+    sql.queryAll(db,`SELECT * FROM EMPLOYEES WHERE NAME = '${data.name}' AND PASSWORD = '${hashed}'`,(err,DATA)=>{
+      if(err){throw err}
       if(DATA.length != 0){// authorised.
         res.send({error : 0})
       }
@@ -54,10 +61,6 @@ server.listen(PORT,(name)=>{
     console.log(`Server is live on http://localhost:${PORT}`);
 })
 
+
 sql.displayTable("EMPLOYEES",DBpath)
 
-// Current Database
-// Ideathon 
-// eYantra
-// Sakthi auto components
-// Mini projects (MPMC , IIoT, CNC)

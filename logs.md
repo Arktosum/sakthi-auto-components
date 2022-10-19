@@ -10,3 +10,7 @@ thus adding a temporary insert feature to insert into SQL in detailViewer.
 
 Converted from MySQL to SQLite3,  which is a in-memory file based database.
 Install node packages only inside server folder to avoid clutter.
+
+
+Questions for HR:
+    -> How to give IDs to employees?

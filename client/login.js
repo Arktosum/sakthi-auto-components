@@ -3,6 +3,7 @@ const dbForm = document.getElementById('db-form');
 dbForm.addEventListener('submit',(e)=>{
     e.preventDefault() // overrides default submission. results in error if deleted.
     const data = Object.fromEntries(new FormData(e.target).entries()); // Converts form data into key value pairs for us.
+    console.log(data);
     let postOptions = {
         method : 'POST',
         headers : {
@@ -13,7 +14,7 @@ dbForm.addEventListener('submit',(e)=>{
     fetch("http://localhost:8080/login",postOptions).then((response) => response.json())
     .then((data) => {
         switch(data.error) {
-            case 0 : alert("You exist!");
+            case 0 : alert("YOU are noted")
                     break;
             case -1: alert("You... liar.")
                     break;

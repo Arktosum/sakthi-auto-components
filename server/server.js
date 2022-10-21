@@ -21,7 +21,8 @@ server.get('/',(req,res)=>{
 })
 
 
-
+let db = sql.connectDB(DBpath)
+sql.queryAll(db,`CREATE TABLE IF NOT EXISTS EMPLOYEES_DATA VALUES(${age})`
 server.post('/signup',(req,res)=>{
   let data = req.body
   let db = sql.connectDB(DBpath)
@@ -43,7 +44,7 @@ server.post('/login',(req, res)=>{
     let data = req.body
     let hashed = hash.hash("sha256",data.pass)
     let db = sql.connectDB(DBpath)
-    sql.queryAll(db,`SELECT * FROM EMPLOYEES WHERE NAME = '${data.name}' AND PASSWORD = '${hashed}'`,(err,DATA)=>{
+    sql.queryAll(db,`SELECT * FROM EMPLOYEES WHERE ID = ${data.id} AND NAME = '${data.name}' AND PASSWORD = '${hashed}'`,(err,DATA)=>{
       if(err){throw err}
       if(DATA.length != 0){// authorised.
         res.send({error : 0})

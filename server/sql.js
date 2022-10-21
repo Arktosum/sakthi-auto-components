@@ -33,6 +33,21 @@ function displayTable(tableName,path){
     })
     closeDB(db)
 }
+
+function displayRecord(id, path){
+  let db = connect(path)
+  queryAll(db, `SELECT * FROM EMPLOYEE_DATA WHERE ID = ${id}`, (err, data)=>{
+    if (data.length == 0){
+      console.log("No data found")
+    }
+    else{
+      console.log(data)
+    }
+    closeDB(db)
+  })
+
+}
+
 module.exports = { connectDB,closeDB,queryAll,displayTable };
   // Do NOT forget to restart server after making changes here.
   

@@ -14,15 +14,13 @@ server.use(
     cors({origin : "*"})
 )
 
-
+  // Do NOT forget to restart server after making changes here.
 let PORT = 8080
 server.get('/',(req,res)=>{
     res.send(JSON.stringify({"yo":"mama"}))
 })
 
 
-let db = sql.connectDB(DBpath)
-sql.queryAll(db,`CREATE TABLE IF NOT EXISTS EMPLOYEES_DATA VALUES(${age})`
 server.post('/signup',(req,res)=>{
   let data = req.body
   let db = sql.connectDB(DBpath)
@@ -47,7 +45,7 @@ server.post('/login',(req, res)=>{
     sql.queryAll(db,`SELECT * FROM EMPLOYEES WHERE ID = ${data.id} AND NAME = '${data.name}' AND PASSWORD = '${hashed}'`,(err,DATA)=>{
       if(err){throw err}
       if(DATA.length != 0){// authorised.
-        res.send({error : 0})
+        res.send({error : 0,id:DATA[0].ID})
       }
       else{
         res.send({error : -1})
@@ -58,10 +56,25 @@ server.post('/login',(req, res)=>{
 })
 
 
+server.post('/userdata',(req, res)=>{
+  let data = req.body
+  let db = sql.connectDB(DBpath)
+  sql.queryAll(db,`SELECT * FROM EMPLOYEES WHERE ID = ${data.id}`,(err,DATA)=>{
+    if(err){throw err}
+    if(DATA.length != 0){// authorised.
+      res.send({error : 0,data:DATA[0]})
+    }
+    else{
+      res.send({error : -1})
+    } 
+  }) 
+  
+sql.closeDB(db)
+})
+
 server.listen(PORT,(name)=>{
     console.log(`Server is live on http://localhost:${PORT}`);
 })
 
 
 sql.displayTable("EMPLOYEES",DBpath)
-

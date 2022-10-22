@@ -14,7 +14,8 @@ dbForm.addEventListener('submit',(e)=>{
     fetch("http://localhost:8080/signup",postOptions).then((res)=>res.json()).then((data)=>{
         switch(data.error){
             case 0 : alert("Successfully created account!");
-                    break;
+                     
+                     break;
             case -1: alert("Account Already Exists!")
                     break;
         }

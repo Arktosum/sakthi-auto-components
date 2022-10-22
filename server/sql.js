@@ -34,23 +34,9 @@ function displayTable(tableName,path){
     closeDB(db)
 }
 
-function displayRecord(id, path){
-  let db = connect(path)
-  queryAll(db, `SELECT * FROM EMPLOYEE_DATA WHERE ID = ${id}`, (err, data)=>{
-    if (data.length == 0){
-      console.log("No data found")
-    }
-    else{
-      console.log(data)
-    }
-    closeDB(db)
-  })
 
-}
 
 module.exports = { connectDB,closeDB,queryAll,displayTable };
-  // Do NOT forget to restart server after making changes here.
-  
   
   // SQL STUFF ----------------------------------------------------
   
@@ -63,13 +49,16 @@ module.exports = { connectDB,closeDB,queryAll,displayTable };
   
   Queries Ran
   "CREATE DATABASE db"
-  
   "CREATE TABLE employees(id INT PRIMARY KEY,name VARCHAR(255),designation VARCHAR(255))"
   INSERT INTO employees (id,name,designation) VALUES (${data.ID},'${data.name}','${data.designation}')` Note, VARCHAR needs '' at ends for query to work.
   
   Current database:
 
   Employees
-    ID       |     Name      | Designation  |   Password ( sha256 hashed)
+    ID       |     Name      |  Designation  |   Password ( sha256 hashed)
+
+  Employees_DATA
+
+    ID       |  Name        |  Designation   |  
 
 */

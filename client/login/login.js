@@ -15,7 +15,7 @@ dbForm.addEventListener('submit',(e)=>{
         switch(data.error) {
             case 0 : alert(`You are ${data.id}`)
                      sessionStorage.setItem('sessionID', data.id)
-                     window.location.href = "page.html";
+                     window.location.href = `..\\page\\page.html`;
                      break;
             case -1: alert("You... liar.")
                     break;

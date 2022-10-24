@@ -8,10 +8,124 @@ body{
     justify-content:center;
     align-items:center;
     min-height: 100vh;
+    background: linear-gradient(115deg, #001f3f 60%, #00356a 75%);
 }
 
 #alert{
     display:flex;
     position:absolute;
     justify-content: center;
+    top:18%
+}
+
+#title{
+    position: absolute;
+    top: 10%;
+    left:auto;
+    right:auto;
+    color:#ff5003;
+}
+
+label{
+    color:#ff5003;
+    font-size: medium;
+    font-weight: bold;
+}
+
+#db-form{
+    position:absolute;
+    top:25%;
+}
+
+.signupform{
+    width : 120%;
+    margin : 10px;
+    transition : 0.5s;
+    margin-bottom: 15px;
+    height: 6%;
+    border-radius: 5px;
+}
+
+.signupform:focus{
+    box-shadow:0 0 18px 4.5px rgba(255, 79, 3, 0.768);
+}
+
+#sub{
+    color:#ff5003;
+    background-color: #001f3f;
+    border-color: #ff5003;
+    font-weight: bolder;
+    width: 120%;
+    height: 6%;
+    position:absolute;
+    top:50%;
+    left:5%;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    margin-top: 15px;
+    border-radius: 5px;
+    border-width:2px;
+    transition: 0.5s;
+}
+
+#sub:hover{
+    color:#002347;
+    background-color: #ff5003;
+    border-color: #002347;
+    font-weight: bolder;
+    font-size: large;
+}
+
+a{
+    color:#ff5003;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    position: absolute;
+    bottom: 10%;
+    left:39%;
+    transition: 0.5s;
+}
+
+a:hover{
+    color:white;
+}
+
+#logo{
+    position:absolute;
+    width:15%;
+    height:15%;
+    left:0%;
+    top:5%;
+}
+
+.footer{
+    width:100%;
+    height:5%;
+    background-color: #ff5003;
+    position:absolute;
+    bottom:0%;
+    color:#002347;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-weight: bolder;
+    text-align: center;
+    font-size: large;
+}
+
+.option, #select{
+    text-align: center;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-weight: bolder;
+    font-size: large;
+    color:#001f3f
+}
+
+body, html {
+    height:100%;
+}
+
+div.wrap {
+    height:100%; 
+    overflow:hidden;
+}
+
+body {
+    overflow: hidden; 
 }

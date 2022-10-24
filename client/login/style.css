@@ -8,7 +8,7 @@ body{
     justify-content:center;
     align-items:center;
     min-height: 100vh;
-    background-color: #002347;
+    background: linear-gradient(115deg, #001f3f 60%, #00356a 75%);
 }
 
 #alert{
@@ -24,7 +24,6 @@ body{
     left:auto;
     right:auto;
     color: #ff5003;
-
 }
 
 label{
@@ -46,7 +45,7 @@ label{
 
 #sub{
     color:#ff5003;
-    background-color: #002347;
+    background-color: #001f3f;
     border-color: #ff5003;
     font-weight: bolder;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -60,6 +59,8 @@ label{
     color:#002347;
     background-color: #ff5003;
     border-color: #002347;
+    font-weight: bolder;
+    font-size: large;
 }
 
 #logo{

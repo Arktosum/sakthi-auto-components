@@ -70,7 +70,7 @@ dbForm.addEventListener('submit',(e)=>{
                     window.location.href = `..\\page\\page.html`;
                     }, 1000)
                     break;
-            case -1: alert_("warning", "unidentified user", 2000)
+            case -1: alert_("warning", "Invalid Credentials", 2000)
         }
     })
 

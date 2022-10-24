@@ -9,3 +9,9 @@ body{
     align-items:center;
     min-height: 100vh;
 }
+
+#alert{
+    display:flex;
+    position:absolute;
+    justify-content: center;
+}

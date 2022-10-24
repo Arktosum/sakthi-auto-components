@@ -55,7 +55,15 @@ server.post('/login',(req, res)=>{
   sql.closeDB(db)
 })
 
-
+server.post('/get_daily',(req, res)=>{
+  let data = req.body
+  let db = sql.connectDB(DBpath)
+  sql.queryAll(db,`SELECT * FROM EMP_DAILY WHERE ID = ${data.id}`,(err,DATA)=>{
+    if(err){console.log(err.code)}
+    else{res.send(DATA)}
+  }) 
+  sql.closeDB(db)
+})
 server.post('/userdata',(req, res)=>{
   let data = req.body
   let db = sql.connectDB(DBpath)
@@ -72,9 +80,37 @@ server.post('/userdata',(req, res)=>{
 sql.closeDB(db)
 })
 
+server.post('/daily',(req,res)=>{
+  let data = req.body
+  console.log(data)
+  let db = sql.connectDB(DBpath)
+  sql.queryAll(db,`INSERT INTO EMP_DAILY VALUES (${data.id},
+    '${data.date}',
+    ${data.rhsi},
+    ${data.rmi},
+    ${data.rq},
+    ${data.cc},
+    ${data.pp},
+    ${data.kaizen})`,(err,DATA)=>{
+    if(err){ // err.code = SQLITE_CONSTRAINT
+      console.log(err)
+      if(err.errno === 19){res.send({error : -1})}
+      else{res.send({error : -2})}
+    }
+    else{
+      res.send({error :  0})
+    }
+  })
+  // do NOT forget '' for VARCHAR inputs.
+  sql.closeDB(db)
+  sql.displayTable("EMP_DAILY",DBpath)
+})
+
 server.listen(PORT,(name)=>{
     console.log(`Server is live on http://localhost:${PORT}`);
 })
 
 
-sql.displayTable("EMPLOYEES",DBpath)
+sql.displayTable("EMP_DAILY",DBpath)
+
+

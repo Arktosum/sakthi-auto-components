@@ -7,18 +7,20 @@
     <script src="login.js" defer></script>
     <link rel="stylesheet" href="style.css">
     <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" defer></script>
 </head>
 <body>
     <!-- Database inputs --> 
-    <form id="db-form" style="display:flex;flex-direction: column; width: 25%; height:100vh;margin-bottom:50px;">
+    <form id="db-form" class = "needs-validation">
         <label for="id">ID</label>
-        <input type="number" name="id" id="">
+        <input type="number" class = "form-control" name="id" id="" required>
         <label for="name">Name</label>
-        <input type="text" name="name" id="">
+        <input type="text" class = "form-control" name="name" id="" required>
         <label for="pass">Password</label>
-        <input type="text" name="pass" id="" >
-        <input type="submit" value="Submit"> <!--Value means Name -->
-        <a href="signup.html">Don't have an account? sign up!</a>
+        <input type="password" class = "form-control" name="pass" id="" required>
+        <input type="submit" class = "form-control" value="Submit"> <!--Value means Name -->
+        <a href="..\signup\signup.html">Don't have an account? Sign up!</a>
     </form>
     
 </body>

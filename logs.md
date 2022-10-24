@@ -13,4 +13,11 @@ Install node packages only inside server folder to avoid clutter.
 
 
 Questions for HR:
+    -> How are they going to integrate our front end to fit their back-end?
     -> How to give IDs to employees?
+    -> Who can create a new employee?
+    -> When to get details of a new employee?
+    -> What details of an employee should we store?
+    -> Who gets to update the employee attributes?
+    -> Who gets to view the employee attributes?
+    -> Where do we get employee images from?

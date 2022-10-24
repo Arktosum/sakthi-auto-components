@@ -64,21 +64,15 @@ dbForm.addEventListener('submit',(e)=>{
     fetch("http://localhost:8080/login",postOptions).then((response) => response.json())
     .then((data) => {
         switch(data.error) {
-            case 0 : alert(`You are ${data.id}`)
-                     sessionStorage.setItem('sessionID', data.id)
-                     window.location.href = `..\\page\\page.html`;
-                     break;
-            case -1: alert("You... liar.")
+            case 0 : alert_("good", `${data.id} logged successfully`, 1200)
+                    setTimeout(()=>{
+                        sessionStorage.setItem('sessionID', data.id)
+                    window.location.href = `..\\page\\page.html`;
+                    }, 1000)
                     break;
+            case -1: alert_("warning", "unidentified user", 2000)
         }
     })
 
 })
 
-function displayAlert(){
-    document.body.innerHTML += `
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-        <strong>Validated!</strong> You are being redirected to your personal page now.
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>`
-}

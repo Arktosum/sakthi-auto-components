@@ -17,7 +17,7 @@ server.use(
   // Do NOT forget to restart server after making changes here.
 let PORT = 8080
 server.get('/',(req,res)=>{
-    res.send(JSON.stringify({"yo":"mama"}))
+    res.send(JSON.stringify({"test":200}))
 })
 
 

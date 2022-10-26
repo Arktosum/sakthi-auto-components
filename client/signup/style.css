@@ -1,4 +1,4 @@
-/* *{
+*{
     margin:0;
     padding:0;
 }
@@ -79,9 +79,8 @@ label{
     font-weight: bolder;
     width: 120%;
     height: 6%;
-    position:absolute;
-    top:50%;
-    left:5%;
+    position:relative;
+    left:3%;
     font-family: 'Coda', cursive;
     margin-top: 15px;
     border-radius: 5px;
@@ -126,7 +125,7 @@ a:hover{
     color:var(--clr-cont);
     font-family: 'Black Ops One', cursive;
     position:absolute;
-    font-size: 30px;
+    font-size: 200%;
     top:7%;
     left:12%;
 }
@@ -162,9 +161,9 @@ div.wrap {
 
 body {
     overflow: hidden; 
-} */
+}
 
-*{
+/* *{
     margin:0;
     padding:0;
 }
@@ -294,4 +293,4 @@ div.wrap {
 
 body {
     overflow: hidden; 
-}
+} */

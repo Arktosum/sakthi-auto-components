@@ -1,5 +1,5 @@
 
-let userID = {id: sessionStorage.getItem('sessionID')}
+let userID = sessionStorage.getItem('sessionID')
 const chartEle = document.getElementById('myChart')
 let x = [1,2,3,4,5];
 let y =  [1,1,1,1,1]
@@ -11,7 +11,7 @@ let postOptions = {
     headers : {
         'Content-Type': 'application/json'
     },
-    body : JSON.stringify(userID)
+    body : JSON.stringify({id : userID})
 }
 
 fetch("http://localhost:8080/userdata",postOptions).then((response) => response.json())
@@ -47,12 +47,10 @@ const templateDiv = document.getElementById('template');
 dbForm.addEventListener('submit',(e)=>{
     e.preventDefault() // overrides default submission. results in error if deleted.
     const data = Object.fromEntries(new FormData(e.target).entries()); // Converts form data into key value pairs for us.
-    let d = new Date()
-
-    data.date = d.getFullYear() + '-' + d.getMonth() + '-' + d.getDate()  // To get current date.
-    // data.date = "2022-10-30"  // for testing ONLY
-    data.id = 1
-    console.log(data)
+    let date = new Date().toISOString().replace(/T.*/,'')
+    //data.date = date // YYYY-MM-DD strictly. dates must be 0 padded. If date problems occur it's probably right here.
+    data.date = `2022-09-27`  // for testing ONLY
+    data.id = userID
     let postOptions = {
         method : 'POST',
         headers : {
@@ -60,7 +58,7 @@ dbForm.addEventListener('submit',(e)=>{
         },
         body : JSON.stringify(data)
     }
-    fetch("http://localhost:8080/daily",postOptions).then((response) => response.json())
+    fetch("http://localhost:8080/insert_daily",postOptions).then((response) => response.json())
     .then((data) => {
         switch(data.error) {
             case 0 : alert("success!")
@@ -78,7 +76,8 @@ dbForm.addEventListener('submit',(e)=>{
 // Charts
 fetch("http://localhost:8080/get_daily",postOptions).then((response) => response.json())
     .then((data) => {
-        console.log(data);
+        if (data.length == 0){return} // Default Graph. No data exists.
+        
         let New_Data = []
         let x_  = []
         let y_ = []

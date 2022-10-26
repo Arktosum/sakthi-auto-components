@@ -10,11 +10,9 @@ let server = express()
 let cors = require('cors')
 
 server.use(express.json()); // To parse POST input body. IMPORTANT.
-server.use(
-    cors({origin : "*"})
-)
+server.use(cors({origin : "*"})) // CORS for CROSS ORIGIN access
 
-  // Do NOT forget to restart server after making changes here.
+// Do NOT forget to restart server after making changes here.
 let PORT = 8080
 server.get('/',(req,res)=>{
     res.send(JSON.stringify({"test":200}))
@@ -23,27 +21,19 @@ server.get('/',(req,res)=>{
 
 server.post('/signup',(req,res)=>{
   let data = req.body
-  let db = sql.connectDB(DBpath)
-  sql.queryAll(db,`INSERT INTO EMPLOYEES VALUES (${data.id},'${data.name}','${data.designation}','${hash.hash("sha256",data.pass)}')`,(err,DATA)=>{
-    if(err && err.errno === 19 ){ // err.code = SQLITE_CONSTRAINT
-      res.send({error : -1})
-    }
-    else{
-      res.send({error :  0})
-    }
+  sql.queryAll(DBpath,
+    `INSERT INTO EMPLOYEES VALUES (${data.id},'${data.name}','${data.designation}','${hash.hash("sha256",data.pass)}')`,(err,DATA)=>{
+      if(err) {if(err.errno === 19 ){  res.send({error : -1}) }else{ res.send({error : -2})}}
+      else{ res.send({error :  0}) } 
   })
   // do NOT forget '' for VARCHAR inputs.
-  sql.closeDB(db)
-  sql.displayTable("EMPLOYEES",DBpath)
 })
 
 
 server.post('/login',(req, res)=>{
     let data = req.body
     let hashed = hash.hash("sha256",data.pass)
-    let db = sql.connectDB(DBpath)
-    sql.queryAll(db,`SELECT * FROM EMPLOYEES WHERE ID = ${data.id} AND NAME = '${data.name}' AND PASSWORD = '${hashed}'`,(err,DATA)=>{
-      if(err){throw err}
+    sql.queryAll(DBpath,`SELECT * FROM EMPLOYEES WHERE ID = ${data.id} AND NAME = '${data.name}' AND PASSWORD = '${hashed}'`,(err,DATA)=>{
       if(DATA.length != 0){// authorised.
         res.send({error : 0,id:DATA[0].ID})
       }
@@ -51,40 +41,29 @@ server.post('/login',(req, res)=>{
         res.send({error : -1})
       } 
     }) 
-    
-  sql.closeDB(db)
+})
+
+// ----------------------------------- PAGE QUERIES -----------------------------------------------
+
+server.post('/userdata',(req, res)=>{
+  let data = req.body
+  sql.queryAll(DBpath,`SELECT * FROM EMPLOYEES WHERE ID = ${data.id}`,(err,DATA)=>{
+    console.log("User data!")
+  }) 
 })
 
 server.post('/get_daily',(req, res)=>{
   let data = req.body
-  let db = sql.connectDB(DBpath)
-  sql.queryAll(db,`SELECT * FROM EMP_DAILY WHERE ID = ${data.id}`,(err,DATA)=>{
-    if(err){console.log(err.code)}
-    else{res.send(DATA)}
+  sql.queryAll(DBpath,`SELECT * FROM EMP_DATA WHERE ID = ${data.id} ORDER BY date ASC`,(err,DATA)=>{
+    res.send(DATA)
   }) 
-  sql.closeDB(db)
-})
-server.post('/userdata',(req, res)=>{
-  let data = req.body
-  let db = sql.connectDB(DBpath)
-  sql.queryAll(db,`SELECT * FROM EMPLOYEES WHERE ID = ${data.id}`,(err,DATA)=>{
-    if(err){throw err}
-    if(DATA.length != 0){// authorised.
-      res.send({error : 0,data:DATA[0]})
-    }
-    else{
-      res.send({error : -1})
-    } 
-  }) 
-  
-sql.closeDB(db)
 })
 
-server.post('/daily',(req,res)=>{
+
+
+server.post('/insert_daily',(req,res)=>{
   let data = req.body
-  console.log(data)
-  let db = sql.connectDB(DBpath)
-  sql.queryAll(db,`INSERT INTO EMP_DAILY VALUES (${data.id},
+  sql.queryAll(DBpath,`INSERT INTO EMP_DATA VALUES (${data.id},
     '${data.date}',
     ${data.rhsi},
     ${data.rmi},
@@ -92,25 +71,52 @@ server.post('/daily',(req,res)=>{
     ${data.cc},
     ${data.pp},
     ${data.kaizen})`,(err,DATA)=>{
-    if(err){ // err.code = SQLITE_CONSTRAINT
-      console.log(err)
-      if(err.errno === 19){res.send({error : -1})}
-      else{res.send({error : -2})}
-    }
-    else{
-      res.send({error :  0})
-    }
+    if(err) {if(err.errno === 19 ){ res.send({error : -1}) }else{ res.send({error : -2})}}
+    else{ res.send({error : 0}) } 
   })
   // do NOT forget '' for VARCHAR inputs.
-  sql.closeDB(db)
-  sql.displayTable("EMP_DAILY",DBpath)
 })
+
+
+server.get('/ui',(req, res)=>{
+  let database = {}
+  setTimeout(()=>{
+    sql.queryAll(DBpath,`SELECT * FROM EMPLOYEES`,(err,DATA)=>{
+      database.EMPLOYEES = DATA
+    })
+  },100)
+  setTimeout(()=>{
+    sql.queryAll(DBpath,`SELECT * FROM EMP_DATA`,(err,DATA)=>{
+      database.EMP_DATA = DATA
+    })
+  },200)
+
+  setTimeout(()=>{
+    res.send(database)
+  },300)
+})
+
 
 server.listen(PORT,(name)=>{
     console.log(`Server is live on http://localhost:${PORT}`);
 })
 
 
-sql.displayTable("EMP_DAILY",DBpath)
+
+
+
+
+// sql.queryAll(DBpath,`CREATE TABLE IF NOT EXISTS EMP_DATA (
+//   id INT,
+//   date DATE,
+//   rhsi FLOAT,
+//   rmi FLOAT,
+//   rq FLOAT,
+//   cc FLOAT,
+//   pp FLOAT,
+//   kaizen FLOAT,
+//   PRIMARY KEY (id,date)
+// )`,(err,DATA)=>{console.log("Success!")})
+
 
 

@@ -17,21 +17,21 @@ function closeDB(db){
       console.log('Closed the database connection.');
     });
   }
-function queryAll(db,sql,callback){
+function queryAll(path,sql,callback){
     // Query all will query and return every row at the same time.
     // other types of queries : each (gives row by row control) , get (gives first row control)
+    let db = connectDB(path);
     db.all(sql,(err,rows)=>{
       callback(err,rows)
     })
+    closeDB(db)
   }
   // Failing constraints like ID's PRIMARY KEY constraint throws a SQLITE_CONSTRAINT error.
   
-function displayTable(tableName,path){
-    let db = connectDB(path)
-    queryAll(db,`SELECT * FROM ${tableName}`,(err,data)=>{
+function displayTable(path,tableName){
+    queryAll(path,`SELECT * FROM ${tableName}`,(err,data)=>{
       console.log(data);
     })
-    closeDB(db)
 }
 
 
@@ -55,10 +55,10 @@ module.exports = { connectDB,closeDB,queryAll,displayTable };
   Current database:
 
   Employees
-    ID       |     Name      |  Designation  |   Password ( sha256 hashed)
+    ID       |     Name      |  Designation  |   Password ( sha256 hashed)  | Photo | Email |
 
-  Employees_DATA
+  EMP_DATA
 
-    ID       |  Name        |  Designation   |  
+    ID       |  Name    |  
 
 */

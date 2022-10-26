@@ -63,9 +63,14 @@ dbForm.addEventListener('submit',(e)=>{
         },
         body : JSON.stringify(data)
     }
-    fetch("http://localhost:8080/signup",postOptions).then((res)=>res.json()).then((data)=>{
-        switch(data.error){
+    fetch("http://localhost:8080/signup",postOptions).then((res)=>res.json()).then((err)=>{
+        switch(err.error){
             case 0 : alert_("good", "Successfully created account!", 1500);
+                    setTimeout(()=>{
+                        console.log(data.id)
+                        sessionStorage.setItem('sessionID', data.id)
+                        window.location.href = `..\\page\\page.html`;
+                    }, 1000)
                     break;
             case -1: alert_("warning", "Account Already Exists!", 2000)
                     break;

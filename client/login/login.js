@@ -67,7 +67,7 @@ dbForm.addEventListener('submit',(e)=>{
             case 0 : alert_("good", `${data.id} logged successfully`, 1200)
                     setTimeout(()=>{
                         sessionStorage.setItem('sessionID', data.id)
-                    window.location.href = `..\\page\\page.html`;
+                        window.location.href = `..\\page\\page.html`;
                     }, 1000)
                     break;
             case -1: alert_("warning", "Invalid Credentials", 2000)

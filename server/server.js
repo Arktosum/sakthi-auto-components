@@ -24,7 +24,7 @@ server.get('/',(req,res)=>{
 server.post('/signup',(req,res)=>{
   let data = req.body
   let db = sql.connectDB(DBpath)
-  sql.queryAll(db,`INSERT INTO EMPLOYEES VALUES (${data.id},'${data.name}','${data.designation}','${hash.hash("sha256",data.pass)}')`,(err,DATA)=>{
+  sql.queryAll(db,`INSERT INTO EMPLOYEES VALUES (${data.Id},'${data.name}','${data.designation}','${hash.hash("sha256",data.pass)}')`,(err,DATA)=>{
     if(err && err.errno === 19 ){ // err.code = SQLITE_CONSTRAINT
       res.send({error : -1})
     }

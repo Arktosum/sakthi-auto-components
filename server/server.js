@@ -20,10 +20,11 @@ server.get('/',(req,res)=>{
 
 
 server.post('/signup',(req,res)=>{
+  console.log("Sign up!")
   let data = req.body
   sql.queryAll(DBpath,
-    `INSERT INTO EMPLOYEES VALUES (${data.id},'${data.name}','${data.designation}','${hash.hash("sha256",data.pass)}')`,(err,DATA)=>{
-      if(err) {if(err.errno === 19 ){  res.send({error : -1}) }else{ res.send({error : -2})}}
+    `INSERT INTO EMPLOYEES (ID,NAME,DESIGNATION,PASSWORD) VALUES (${data.id},'${data.name}','${data.designation}','${hash.hash("sha256",data.pass)}')`,(err,DATA)=>{
+      if(err) {if(err.errno === 19 ){  res.send({error : -1}) }else{ console.log(err); res.send({error : -2})}}
       else{ res.send({error :  0}) } 
   })
   // do NOT forget '' for VARCHAR inputs.
@@ -31,10 +32,11 @@ server.post('/signup',(req,res)=>{
 
 
 server.post('/login',(req, res)=>{
+    console.log("Log In!")
     let data = req.body
     let hashed = hash.hash("sha256",data.pass)
     sql.queryAll(DBpath,`SELECT * FROM EMPLOYEES WHERE ID = ${data.id} AND NAME = '${data.name}' AND PASSWORD = '${hashed}'`,(err,DATA)=>{
-      if(DATA.length != 0){// authorised.
+      if(DATA.length != 0){// authorized.
         res.send({error : 0,id:DATA[0].ID})
       }
       else{
@@ -46,13 +48,15 @@ server.post('/login',(req, res)=>{
 // ----------------------------------- PAGE QUERIES -----------------------------------------------
 
 server.post('/userdata',(req, res)=>{
+  console.log("User data!")
   let data = req.body
   sql.queryAll(DBpath,`SELECT * FROM EMPLOYEES WHERE ID = ${data.id}`,(err,DATA)=>{
-    console.log("User data!")
+    
   }) 
 })
 
 server.post('/get_daily',(req, res)=>{
+  console.log("get daily")
   let data = req.body
   sql.queryAll(DBpath,`SELECT * FROM EMP_DATA WHERE ID = ${data.id} ORDER BY date ASC`,(err,DATA)=>{
     res.send(DATA)
@@ -62,6 +66,7 @@ server.post('/get_daily',(req, res)=>{
 
 
 server.post('/insert_daily',(req,res)=>{
+  console.log("insert daily")
   let data = req.body
   sql.queryAll(DBpath,`INSERT INTO EMP_DATA VALUES (${data.id},
     '${data.date}',
@@ -103,7 +108,17 @@ server.listen(PORT,(name)=>{
 
 
 
+const fs = require('fs')
 
+fs.readFile('client\\page\\MrBibek.png','base64',(err,data)=>{
+  sql.queryAll(DBpath,`UPDATE EMPLOYEES SET image = '${data}' WHERE ID = 1`,(err,data)=>{
+    if(err){throw err}
+    console.log("Success")
+  })
+})
+
+
+//fs.createWriteStream(imageName).write(imageBuffer);
 
 
 // sql.queryAll(DBpath,`CREATE TABLE IF NOT EXISTS EMP_DATA (

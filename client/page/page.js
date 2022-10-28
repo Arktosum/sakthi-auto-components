@@ -1,41 +1,15 @@
-import {apiEndpoint} from "../utils.js"
+import {apiEndpoint,alert_,POST} from "../utils.js"
 
 let userID = sessionStorage.getItem('sessionID')
 const chartEle = document.getElementById('myChart')
 
-
 let x = [1,2,3,4,5];
 let y =  [1,1,1,1,1]
+
+
 let config = getConfig('line',x,y,'KP%',`rgba(0,0,255,0.4)`,`rgba(0,255,0,0.5)`,`rgba(255,0,0,0.3)`)
 const chart = new Chart(chartEle,config)
 
-let postOptions = {
-    method : 'POST',
-    headers : {
-        'Content-Type': 'application/json'
-    },
-    body : JSON.stringify({id : userID})
-}
-
-fetch(apiEndpoint+"/userdata",postOptions).then((response) => response.json())
-.then((data) => {
-    switch(data.error) {
-        case 0 : displayData(data.data)
-                break;
-        case -1: alert("Something went REALLY wrong.")
-                break;
-    }
-})
-
-
-function displayData(data){
-    // document.body.innerHTML+= `<div>
-    // <h1>Welcome, ${data.NAME}!</h1>
-    // <p> Employee No : ${data.ID}</p>
-    // <p>Designation : ${data.DESIGNATION}</p>
-    // </div>`
-    console.log(data)
-}
 
 document.getElementById('logout-btn').onclick = ()=>{
     console.log("logout")
@@ -45,10 +19,20 @@ document.getElementById('logout-btn').onclick = ()=>{
 }
 
 
+const insertDiv = document.getElementById('insert-area')
+
+POST(apiEndpoint + '/user_data',{id:userID},(res)=>{
+    console.log(res)
+    insertDiv.innerHTML = `
+    <h1> Welcome ${res.NAME}! </h1>
+    <p> ID : ${res.ID} </p>
+    <p> Designation : ${res.DESIGNATION} </p>
+    `
+})
 // EMPLOYEE DETAILS
 
 const dbForm = document.getElementById('daily-entry');
-const templateDiv = document.getElementById('template');
+
 dbForm.addEventListener('submit',(e)=>{
     e.preventDefault() // overrides default submission. results in error if deleted.
     const data = Object.fromEntries(new FormData(e.target).entries()); // Converts form data into key value pairs for us.
@@ -56,15 +40,7 @@ dbForm.addEventListener('submit',(e)=>{
     data.date = date // YYYY-MM-DD strictly. dates must be 0 padded. If date problems occur it's probably right here.
     // data.date = `2022-09-27`  // for testing ONLY
     data.id = userID
-    let postOptions = {
-        method : 'POST',
-        headers : {
-            'Content-Type': 'application/json'
-        },
-        body : JSON.stringify(data)
-    }
-    fetch(apiEndpoint+"/insert_daily",postOptions).then((response) => response.json())
-    .then((data) => {
+    POST(apiEndpoint+"/insert_daily",data,(data)=>{
         switch(data.error) {
             case 0 : alert("success!")
                      break;
@@ -78,26 +54,25 @@ dbForm.addEventListener('submit',(e)=>{
 })
 
 
+
 // Charts
-fetch(apiEndpoint + "/get_daily",postOptions).then((response) => response.json())
-    .then((data) => {
-        if (data.length == 0){return} // Default Graph. No data exists.
+POST(apiEndpoint + "/get_daily",{id:userID},(data)=>{
+    if (data.length == 0){return} // Default Graph. No data exists.
         
-        let New_Data = []
-        let x_  = []
-        let y_ = []
-        data.forEach((row)=>{
-            let kp = row.rhsi + row.rmi + row.rq + row.cc + row.pp + row.kaizen
-            x_.push(row.date)
-            y_.push(kp)
-            New_Data.push({x: row.date, y: kp})
-        })
-        chart.data.labels = x_
-        chart.data.datasets[0].data = y_
-        chart.update()
+    let New_Data = []
+    let x_  = []
+    let y_ = []
+    data.forEach((row)=>{
+        let kp = row.rhsi + row.rmi + row.rq + row.cc + row.pp + row.kaizen
+        x_.push(row.date)
+        y_.push(kp)
+        New_Data.push({x: row.date, y: kp})
     })
-
-
+    chart.data.labels = x_
+    chart.data.datasets[0].data = y_
+    chart.update()
+})
+        
 
 
 

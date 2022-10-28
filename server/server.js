@@ -50,14 +50,12 @@ server.post('/login',(req, res)=>{
 
 // ----------------------------------- PAGE QUERIES -----------------------------------------------
 
-server.post('/userdata',(req, res)=>{
-  console.log("User data!")
+server.post('/user_data',(req, res)=>{
   let data = req.body
-  sql.queryAll(DBpath,`SELECT * FROM EMPLOYEES WHERE ID = ${data.id}`,(err,DATA)=>{
-    
+  sql.queryAll(DBpath,`SELECT * FROM EMPLOYEES WHERE ID = ${data.id} `,(err,DATA)=>{
+    res.send(DATA[0])
   }) 
 })
-
 server.post('/get_daily',(req, res)=>{
   console.log("get daily")
   let data = req.body

@@ -8,14 +8,16 @@ let DBpath = 'server\\database.db'
 // CORS is required for localhost accessing.
 let server = express()
 let cors = require('cors')
-
+let path  = require('path')
 server.use(express.json()); // To parse POST input body. IMPORTANT.
 server.use(cors({origin : "*"})) // CORS for CROSS ORIGIN access
 
+server.use(express.static(path.join(__dirname, '..','client')))
+server.use(express.static(path.join(__dirname, '..','client','login'),{index: 'login.html'}))
 // Do NOT forget to restart server after making changes here.
 let PORT = 8080
 server.get('/',(req,res)=>{
-    res.send(JSON.stringify({"test":200}))
+
 })
 
 

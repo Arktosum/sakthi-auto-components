@@ -1,3 +1,4 @@
+import {apiEndpoint} from "../utils.js"
 const dbForm = document.getElementById('db-form');
 
 function alert_(type, message, delay){
@@ -63,7 +64,7 @@ dbForm.addEventListener('submit',(e)=>{
         },
         body : JSON.stringify(data)
     }
-    fetch("http://localhost:8080/signup",postOptions).then((res)=>res.json()).then((err)=>{
+    fetch(apiEndpoint+"/signup",postOptions).then((res)=>res.json()).then((err)=>{
         console.log(err);
         switch(err.error){
             case 0 : alert_("good", "Successfully created account!", 1500);

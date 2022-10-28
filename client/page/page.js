@@ -53,8 +53,8 @@ dbForm.addEventListener('submit',(e)=>{
     e.preventDefault() // overrides default submission. results in error if deleted.
     const data = Object.fromEntries(new FormData(e.target).entries()); // Converts form data into key value pairs for us.
     let date = new Date().toISOString().replace(/T.*/,'')
-    //data.date = date // YYYY-MM-DD strictly. dates must be 0 padded. If date problems occur it's probably right here.
-    data.date = `2022-09-27`  // for testing ONLY
+    data.date = date // YYYY-MM-DD strictly. dates must be 0 padded. If date problems occur it's probably right here.
+    // data.date = `2022-09-27`  // for testing ONLY
     data.id = userID
     let postOptions = {
         method : 'POST',

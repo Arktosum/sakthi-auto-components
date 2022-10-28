@@ -1,6 +1,9 @@
+import {apiEndpoint} from "../utils.js"
 
 let userID = sessionStorage.getItem('sessionID')
 const chartEle = document.getElementById('myChart')
+
+
 let x = [1,2,3,4,5];
 let y =  [1,1,1,1,1]
 let config = getConfig('line',x,y,'KP%',`rgba(0,0,255,0.4)`,`rgba(0,255,0,0.5)`,`rgba(255,0,0,0.3)`)
@@ -14,7 +17,7 @@ let postOptions = {
     body : JSON.stringify({id : userID})
 }
 
-fetch("http://localhost:8080/userdata",postOptions).then((response) => response.json())
+fetch(apiEndpoint+"/userdata",postOptions).then((response) => response.json())
 .then((data) => {
     switch(data.error) {
         case 0 : displayData(data.data)
@@ -33,7 +36,9 @@ function displayData(data){
     // </div>`
     console.log(data)
 }
-function logout(){
+
+document.getElementById('logout-btn').onclick = ()=>{
+    console.log("logout")
     sessionStorage.removeItem('sessionID')
     alert("You have been logged out!")
     window.location.href = "..\\login\\login.html";
@@ -58,7 +63,7 @@ dbForm.addEventListener('submit',(e)=>{
         },
         body : JSON.stringify(data)
     }
-    fetch("http://localhost:8080/insert_daily",postOptions).then((response) => response.json())
+    fetch(apiEndpoint+"/insert_daily",postOptions).then((response) => response.json())
     .then((data) => {
         switch(data.error) {
             case 0 : alert("success!")
@@ -74,7 +79,7 @@ dbForm.addEventListener('submit',(e)=>{
 
 
 // Charts
-fetch("http://localhost:8080/get_daily",postOptions).then((response) => response.json())
+fetch(apiEndpoint + "/get_daily",postOptions).then((response) => response.json())
     .then((data) => {
         if (data.length == 0){return} // Default Graph. No data exists.
         

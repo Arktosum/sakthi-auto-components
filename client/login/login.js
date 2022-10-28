@@ -1,3 +1,4 @@
+import {apiEndpoint} from "../utils.js"
 function alert_(type, message, delay){
 
     if(document.getElementById("inter")){
@@ -49,6 +50,8 @@ function alert_(type, message, delay){
 
 }
 
+
+
 const dbForm = document.getElementById('db-form');
 const templateDiv = document.getElementById('template');
 dbForm.addEventListener('submit',(e)=>{
@@ -61,7 +64,7 @@ dbForm.addEventListener('submit',(e)=>{
         },
         body : JSON.stringify(data)
     }
-    fetch("http://localhost:8080/login",postOptions).then((response) => response.json())
+    fetch(apiEndpoint+ "/login",postOptions).then((response) => response.json())
     .then((data) => {
         switch(data.error) {
             case 0 : alert_("good", `${data.id} logged successfully`, 1200)

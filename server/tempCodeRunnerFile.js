@@ -1,1 +1,1 @@
-server.use(express.static(path.join(__dirname, '..','client')))
+data

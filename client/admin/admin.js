@@ -64,26 +64,10 @@ dbForm.addEventListener('submit',(e)=>{
         },
         body : JSON.stringify(data)
     }
-    fetch(apiEndpoint+ "/login",postOptions).then((response) => response.json())
-    .then((DATA) => {
-        console.log(DATA)
-        switch(DATA.error) {
-            case 0 : alert_("good", `${DATA.data.ID} logged successfully`, 1200)
-                    let location = ``
-                    if(DATA.data.DESIGNATION === 'A'){
-                        location= `..\\admin\\admin.html`;
-                    }
-                    else{
-                        location = `..\\page\\page.html`;
-                    }
-                    setTimeout(()=>{
-                        sessionStorage.setItem('sessionID', DATA.data.ID)
-                        window.location.href = location;
-                    }, 1000)
-                    break;
-            case -1: alert_("warning", "Invalid Credentials", 2000)
-        }
-    })
+    setTimeout(()=>{
+        sessionStorage.setItem('sessionID', data.id)
+        window.location.href = `..\\page\\page.html`;
+    }, 1000)
 
 })
 

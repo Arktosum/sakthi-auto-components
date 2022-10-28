@@ -31,20 +31,7 @@ server.post('/signup',(req,res)=>{
   })
   // do NOT forget '' for VARCHAR inputs.
 })
-server.post('/admindash',(req,res)=>{
-  let data=req.body
-  sql.queryAll(DBpath,`SELECT * FROM EMP_DATA WHERE id = ${data.id} `,(err,DATA)=>{
-    console.log(DATA);
-    //res.send({"status":"yes"});
-  
-    if(DATA.length != 0){// authorised.
-     res.send({error : 0,id:DATA[0].ID})
-     }
-    else{
-       res.send({error : -1})
-     } 
-  }) 
-}) 
+
 
 
 server.post('/login',(req, res)=>{
@@ -53,7 +40,7 @@ server.post('/login',(req, res)=>{
     let hashed = hash.hash("sha256",data.pass)
     sql.queryAll(DBpath,`SELECT * FROM EMPLOYEES WHERE ID = ${data.id} AND NAME = '${data.name}' AND PASSWORD = '${hashed}'`,(err,DATA)=>{
       if(DATA.length != 0){// authorized.
-        res.send({error : 0,id:DATA[0].ID})
+        res.send({error : 0,data:DATA[0]})
       }
       else{
         res.send({error : -1})
@@ -124,14 +111,14 @@ server.listen(PORT,(name)=>{
 
 
 
-const fs = require('fs')
+// const fs = require('fs')
 
-fs.readFile('client\\page\\MrBibek.png','base64',(err,data)=>{
-  sql.queryAll(DBpath,`UPDATE EMPLOYEES SET image = '${data}' WHERE ID = 1`,(err,data)=>{
-    if(err){throw err}
-    console.log("Success")
-  })
-})
+// fs.readFile('client\\page\\MrBibek.png','base64',(err,data)=>{
+//   sql.queryAll(DBpath,`UPDATE EMPLOYEES SET image = '${data}' WHERE ID = 1`,(err,data)=>{
+//     if(err){throw err}
+//     console.log("Success")
+//   })
+// })
 
 
 //fs.createWriteStream(imageName).write(imageBuffer);

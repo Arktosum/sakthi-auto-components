@@ -28,6 +28,20 @@ server.post('/signup',(req,res)=>{
   })
   // do NOT forget '' for VARCHAR inputs.
 })
+server.post('/admindash',(req,res)=>{
+  let data=req.body
+  sql.queryAll(DBpath,`SELECT * FROM EMP_DATA WHERE id = ${data.id} `,(err,DATA)=>{
+    console.log(DATA);
+    //res.send({"status":"yes"});
+  
+    if(DATA.length != 0){// authorised.
+     res.send({error : 0,id:DATA[0].ID})
+     }
+    else{
+       res.send({error : -1})
+     } 
+  }) 
+}) 
 
 
 server.post('/login',(req, res)=>{

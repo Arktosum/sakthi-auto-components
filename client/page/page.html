@@ -16,6 +16,7 @@
     <div class="navbar">
         <button class ="btn btn-primary" id="logout-btn">Logout</button>
     </div>
+    <div id="alert"></div>
    
     <!-- <form id="update-details">
         <label for="name">Name: </label>
@@ -35,21 +36,54 @@
     <hr>
     <div id="insert-area"></div>
     <form id="daily-entry">
-        <label for="rhsi">Reportable Health and Safety Incidents (10%): </label>
-        <input type="text" class = "form-control" name="rhsi" id="" required>
-        <label for="rmi">Reportable machine Incidents (10%) </label>
-        <input type="text" class = "form-control" name="rmi" id="" required >
-        <label for="rq">Rejection Quantity (20%)</label>
-        <input type="text" class = "form-control" name="rq" id="" required>
-        <label for="cc">Customer Complaints (10%) </label>
-        <input type="text" class = "form-control" name="cc" id="" required>
-        <label for="pp">Production Percent (40%) </label>
-        <input type="text" class = "form-control" name="pp" id="" required>
-        <label for="kaizen">Kaizen (Continous Improvement) (10%)</label>
-        <input type="text" class = "form-control" name="kaizen" id="" required>
+        <div>
+            <label for="rhsi">Reportable Health and Safety Incidents: </label>
+            <input type="text"name="rhsi" id="" required>
+        </div>
+        <div>
+            <label for="rmi">Reportable machine Incidents: </label>
+            <input type="text"name="rmi" id="" required >
+        </div>
+        <div>
+            <label for="rq">Rejection Quantity: </label>
+            <input type="text"name="rq" id="" required>
+        </div>
+        <div>
+            <label for="cc">Customer Complaints: </label>
+            <input type="text"name="cc" id="" required>
+        </div>
+        <div>
+            <label for="pplan">Production Plan: </label>
+            <input type="text"name="pplan" id="" required>
+        </div>
+        <div>
+            <label for="pa">Production Actual: </label>
+            <input type="text"name="pa" id="" required>
+        </div>
+        <div>
+            <label for="pp">Production Percent: </label>
+            <input type="text"name="pp" id="" required>
+        </div>
+        <div>
+            <label for="kaizen">Kaizen (Continous Improvement): </label>
+            <input type="text"name="kaizen" id="" required>
+        </div>
+
         <input type="submit" class="btn btn-primary" value="Submit">
     </form>
-    <div class="chart-div"><canvas id="myChart"></canvas></div>
+    <div>
+        <label for="date-from">From: </label>
+        <input type="date" name="date-from" id="date-from">
+    </div>
+    <div>
+        <label for="date-to">To: </label>
+        <input type="date" name="date-to" id="date-to">
+    </div>
+    <div style="display:flex;">
+        <div class="chart-div"><canvas id="daily-chart"></canvas></div>
+        <div class="chart-div"><canvas id="attribute-chart"></canvas></div>
+    </div>
+    
     <div class="footer"></div>
 </body>
 </html>

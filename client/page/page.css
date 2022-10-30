@@ -1,16 +1,15 @@
 *{
     margin:0;
-    padding:0;   
+    padding:0;
 }
 
 
-.navbar{
-    background-color : blue;
-    width: 100%;
-    height: 10vh;
+#daily-entry{
+    display: flex;
+    flex-direction: column;
 }
 
 .chart-div{
-    width: 1000px;
+    width: 500px;
     height: 500px;
 }

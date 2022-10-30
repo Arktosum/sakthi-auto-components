@@ -1,4 +1,4 @@
-// Local Server using Express.js
+  // Local Server using Express.js
 let express = require('express')
 
 let sql = require('./sql')
@@ -59,7 +59,7 @@ server.post('/user_data',(req, res)=>{
 server.post('/get_daily',(req, res)=>{
   console.log("get daily")
   let data = req.body
-  sql.queryAll(DBpath,`SELECT * FROM EMP_DATA WHERE ID = ${data.id} ORDER BY date ASC`,(err,DATA)=>{
+  sql.queryAll(DBpath,`SELECT * FROM EMP_DATA WHERE id = ${data.id} AND date >= '${data.from}' AND date <= '${data.to}' ORDER BY date ASC`,(err,DATA)=>{
     res.send(DATA)
   }) 
 })
@@ -75,6 +75,8 @@ server.post('/insert_daily',(req,res)=>{
     ${data.rmi},
     ${data.rq},
     ${data.cc},
+    ${data.pplan},
+    ${data.pa},
     ${data.pp},
     ${data.kaizen})`,(err,DATA)=>{
     if(err) {if(err.errno === 19 ){ res.send({error : -1}) }else{ res.send({error : -2})}}
@@ -108,7 +110,6 @@ server.listen(PORT,(name)=>{
 })
 
 
-
 // const fs = require('fs')
 
 // fs.readFile('client\\page\\MrBibek.png','base64',(err,data)=>{
@@ -129,10 +130,9 @@ server.listen(PORT,(name)=>{
 //   rmi FLOAT,
 //   rq FLOAT,
 //   cc FLOAT,
+//   pplan FLOAT,
+//   pa FLOAT,
 //   pp FLOAT,
 //   kaizen FLOAT,
 //   PRIMARY KEY (id,date)
 // )`,(err,DATA)=>{console.log("Success!")})
-
-
-

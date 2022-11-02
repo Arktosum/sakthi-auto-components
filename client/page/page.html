@@ -79,9 +79,12 @@
         <label for="date-to">To: </label>
         <input type="date" name="date-to" id="date-to">
     </div>
-    <div style="display:flex;">
+    <input type="checkbox" name="toggle" id="toggle-view"> Toggle Me!
+    <div style="display:flex;" id="chart-div">
         <div class="chart-div"><canvas id="daily-chart"></canvas></div>
         <div class="chart-div"><canvas id="attribute-chart"></canvas></div>
+    </div>
+    <div style="display:none;" id="table-div">
     </div>
     
     <div class="footer"></div>

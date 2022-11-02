@@ -5,8 +5,9 @@ const chartEle = document.getElementById('daily-chart')
 const chartEle2 = document.getElementById('attribute-chart')
 const dateFrom = document.getElementById('date-from')
 const dateTo = document.getElementById('date-to')
-// let currdate = new Date().toISOString().replace(/T.*/,'')
-let currdate = '2022-11-15'
+const toggleEle = document.getElementById('toggle-view')
+let currdate = new Date().toISOString().replace(/T.*/,'')
+// let currdate = '2022-11-15'
 let minMostDate = '2022-01-01'
 dateFrom.value = minMostDate
 dateFrom.min = minMostDate
@@ -15,7 +16,22 @@ dateTo.value = currdate
 dateTo.min = minMostDate
 dateTo.max = currdate
 
+let state = 0
 
+toggleEle.onchange = ()=>{
+    state = (state+1) % 2
+    if(state == 0){
+        // Display Chart
+        document.getElementById("chart-div").style.display = 'flex'
+        document.getElementById("table-div").style.display = 'none'
+        
+    }
+    else{
+        //Display Table
+        document.getElementById("chart-div").style.display = 'none'
+        document.getElementById("table-div").style.display = 'block'
+    }
+}
 
 let x = [1,2,3,4,5];
 let y =  [1,1,1,1,1]
@@ -34,6 +50,7 @@ document.getElementById('logout-btn').onclick = ()=>{
     alert("You have been logged out!")
     window.location.href = "..\\login\\login.html";
 }
+
 
 
 const insertDiv = document.getElementById('insert-area')
@@ -81,7 +98,7 @@ function displayChart(dateFrom,dateTo){
         if (data.length == 0){
             alert_('warning',"No data for selected date!",2100)
             return} // Default Graph. No data exists.
-            
+        displayTable(data)
         let x_  = []
         let y_ = []
         let attr_y = [0,0,0,0,0,0]
@@ -103,7 +120,6 @@ function displayChart(dateFrom,dateTo){
         for(let i = 0 ; i < attr_y.length; i++){
             attr_y[i] = attr_y[i]/data.length
         }
-        console.log(attr_y)
         attr_chart.data.datasets[0].data = attr_y
         attr_chart.update()
         chart.data.labels = x_
@@ -113,6 +129,34 @@ function displayChart(dateFrom,dateTo){
 }
 
         
+function displayTable(data){
+    let table = document.getElementById('table-div')
+    let string = `<table>
+    <tr>
+        <th>Date</th>
+        <th>RHSI</th>
+        <th>RMI</th>
+        <th>RQ</th>
+        <th>CC</th>
+        <th>PPLAN</th>
+        <th>PA</th>
+        <th>PP</th>
+        <th>Kaizen</th>
+    </tr>
+    `
+    for(let row in data){
+        string += `<tr>`
+        for(let col in data[row]){
+            if(col == 'id'){continue;}
+            string += `<td>${data[row][col]}</td>`
+        }
+        string += `</tr>`
+        
+    }
+
+    string += `</table>`
+    table.innerHTML = string
+}
 
 
 

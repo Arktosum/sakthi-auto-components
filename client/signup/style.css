@@ -7,16 +7,20 @@
     --clr-accent : #001f3f;
     --clr-cont : #ff5003;
     ---clr-accent2 : #00356a;
-    --clr-cont-hue : rgba(255, 79, 3, 0.768);
+    --clr-cont-hue : rgba(255, 79, 3, 0.894);
 }
 
 body{
-    display:flex;
+    display: flex;
+    flex-direction: row;
     justify-content:center;
     align-items:center;
-    min-height: 100vh;
-    zoom: 100%;
-    background: linear-gradient(115deg, var(--clr-accent) 60%, var(---clr-accent2) 75%);
+    max-height: 100vh;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center center;
+    background-image:url('..\\sakthi logo\\gradient2.jpg')
 }
 
 #alert{
@@ -31,7 +35,7 @@ body{
     top: 18%;
     left:auto;
     right:auto;
-    font-size: 2.2vmax;
+    font-size: max(2.5vw, 3vh, 18px);
     color:var(--clr-cont);
     font-family: 'Kreon', serif;
 }
@@ -45,15 +49,17 @@ label{
 
 #db-form{
     position:absolute;
-    top:25%;
+    top:28vh;
+    left:35vw;
 }
 
 .signupform{
     width : 27vmax;
     margin : 10px;
     transition : 0.5s;
-    margin-bottom: 15px;
-    height: 5.8vmin;
+    margin-bottom: max(1.3vh, 12px);
+    height: 6vh;
+    min-height: 35px;
     border-radius: 5px;
     padding-left: 20px;
     font-family: 'Roboto Condensed', sans-serif;
@@ -62,7 +68,7 @@ label{
 }
 
 .signupform:focus{
-    box-shadow:0 0 18px 4.5px var(--clr-cont-hue);
+    box-shadow:0 0 20px 4.5px var(--clr-cont-hue);
 }
 
 .option, #select{
@@ -79,7 +85,8 @@ label{
     border-color: var(--clr-cont);
     font-weight: bolder;
     width: 27vmax;
-    height: 6%;
+    height: 6vh;
+    min-height: 35px;
     position:relative;
     left:3%;
     font-family: 'Coda', cursive;
@@ -100,12 +107,12 @@ label{
 a{
     color:var(--clr-cont);
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    position: absolute;
-    bottom: 9%;
-    font-size: 2.2vmin;
-    left:39%;
-    margin-top:50px;
+    font-size: max(1vmax, 0.4em, 10px);
+    display: block;
+    white-space: nowrap;
+    margin-top:1.5vh;
     transition: 0.5s;
+    margin-left:10px;
 }
 
 a:hover{
@@ -128,7 +135,7 @@ a:hover{
     color:var(--clr-cont);
     font-family: 'Black Ops One', cursive;
     position:absolute;
-    font-size: 2.5vmax;
+    font-size: max(2.5vw, 3.5vh, 18px);
     top:7%;
     left:12%;
 }
@@ -139,161 +146,61 @@ a:hover{
     transition: 0.3s, background-position 0.3s 0.3s;
 }
 
-.footer{
-    width:100%;
-    height:5%;
-    background-color: var(--clr-cont);
-    position:absolute;
-    padding:5px;
-    bottom:0%;
-    color:var(--clr-accent);
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    font-weight: bolder;
-    text-align: center;
-    font-size: large;
+
+
+
+@media (max-width: 600px){
+    #db-form{
+        left:30vw;
+    }
 }
 
-body, html {
-    height:100%;
+
+@media (max-width: 550px){
+    #db-form{
+        left:28vw;
+    }
 }
 
-div.wrap {
-    height:100%; 
-    overflow:hidden;
+
+@media (max-width: 500px){
+    #db-form{
+        left:20vw;
+    }
 }
 
-body {
-    overflow: hidden; 
+
+@media (max-width: 450px){
+    #db-form{
+        left:19.5vw;
+    }
 }
 
-/* *{
-    margin:0;
-    padding:0;
+@media (max-width: 400px){
+    #db-form{
+        left:19vw;
+    }
 }
 
-body{
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    min-height: 100vh;
-    background: linear-gradient(115deg, #001f3f 60%, #00356a 75%);
+@media (max-width: 350px){
+    #db-form{
+        left:17vw;
+    }
 }
 
-#alert{
-    display:flex;
-    position:absolute;
-    justify-content: center;
-    top:18%
+@media (max-width: 300px){
+    #db-form{
+        left:15vw;
+    }
+
+    .name{
+        font-size:15px;
+    }
 }
 
-#title{
-    position: absolute;
-    top: 10%;
-    left:auto;
-    right:auto;
-    color:#ff5003;
+@media (max-width: 250px){
+    #db-form{
+        left:20vw;
+    }
 }
 
-label{
-    color:#ff5003;
-    font-size: medium;
-    font-weight: bold;
-}
-
-#db-form{
-    position:absolute;
-    top:25%;
-}
-
-.signupform{
-    width : 120%;
-    margin : 10px;
-    transition : 0.5s;
-    margin-bottom: 15px;
-    height: 6%;
-    border-radius: 5px;
-}
-
-.signupform:focus{
-    box-shadow:0 0 18px 4.5px rgba(255, 79, 3, 0.768);
-}
-
-#sub{
-    color:#ff5003;
-    background-color: #001f3f;
-    border-color: #ff5003;
-    font-weight: bolder;
-    width: 120%;
-    height: 6%;
-    position:absolute;
-    top:50%;
-    left:5%;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    margin-top: 15px;
-    border-radius: 5px;
-    border-width:2px;
-    transition: 0.5s;
-}
-
-#sub:hover{
-    color:#002347;
-    background-color: #ff5003;
-    border-color: #002347;
-    font-weight: bolder;
-    font-size: large;
-}
-
-a{
-    color:#ff5003;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    position: absolute;
-    bottom: 10%;
-    left:39%;
-    transition: 0.5s;
-}
-
-a:hover{
-    color:white;
-}
-
-#logo{
-    position:absolute;
-    width:15%;
-    height:15%;
-    left:0%;
-    top:5%;
-}
-
-.footer{
-    width:100%;
-    height:5%;
-    background-color: #ff5003;
-    position:absolute;
-    bottom:0%;
-    color:#002347;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    font-weight: bolder;
-    text-align: center;
-    font-size: large;
-}
-
-.option, #select{
-    text-align: center;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    font-weight: bolder;
-    font-size: large;
-    color:#001f3f
-}
-
-body, html {
-    height:100%;
-}
-
-div.wrap {
-    height:100%; 
-    overflow:hidden;
-}
-
-body {
-    overflow: hidden; 
-} */

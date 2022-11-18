@@ -1,5 +1,37 @@
 import {apiEndpoint,alert_,POST} from "../utils.js"
 
+// const r = document.querySelector(":root")
+function show(){
+    var inp = document.querySelector(`.${this.id}`)
+    inp.style["background-size"] = "0 0.1em, 100% 0.1em";
+}
+
+function hide(){
+    var inp = document.querySelector(`.${this.id}`)
+    inp.style["background-size"] = "100% 0.1em, 0 0.1em";
+}
+
+var rhsi = document.getElementById("rhsi")
+var rmi = document.getElementById("rmi")
+var rq = document.getElementById("rq")
+var cc = document.getElementById("cc")
+var pplan = document.getElementById("pplan")
+var pa = document.getElementById("pa")
+var pp = document.getElementById("pp")
+var kaizen = document.getElementById("kaizen")
+var df = document.getElementById("date-from")
+var dt = document.getElementById("date-to")
+
+const inps = [rhsi, rmi, rq, cc, pplan, pa, pp, kaizen, df, dt];
+
+inps.forEach(inp =>{
+    inp.addEventListener('mouseover', show)
+    inp.addEventListener('mouseout', hide)
+    inp.addEventListener('focusin', show)
+    inp.addEventListener('input', show)
+    inp.addEventListener('focusout',hide)
+})
+
 let userID = sessionStorage.getItem('sessionID')
 const chartEle = document.getElementById('daily-chart')
 const chartEle2 = document.getElementById('attribute-chart')
@@ -77,8 +109,8 @@ dbForm.addEventListener('submit',(e)=>{
     POST(apiEndpoint+"/insert_daily",data,(data)=>{
         switch(data.error) {
             case 0 : alert("success!");
-                     displayChart()
-                     break;
+                    displayChart()
+                    break;
             case -1: alert("You have already set today's data. Do you want to update it?")
                     break;
             case -2 : alert("Something went wrong!");

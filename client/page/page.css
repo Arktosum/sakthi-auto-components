@@ -6,13 +6,16 @@
 :root{
     --clr : #8299b9;
     --clr-cont : #DCC7AA;
-    --clr-cont2 : #1F3D52;
+    --clr-cont2 : #08325d;
     --clr2 : #6fb3d3;
 }
 
 body{
-background-color:var(--clr);
-
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center center;
+    background-image:url('..\\sakthi logo\\gradient2.jpg')
 }
 
 #daily-entry{
@@ -20,9 +23,20 @@ background-color:var(--clr);
     flex-direction: column;
 }
 
-.chart-div{
+#chart-div{
+    padding:50px;
     width: 500px;
     height: 500px;
+}
+#table-div{
+    padding:50px;
+    width: 500px;
+    height: 500px;
+}
+
+#daily-chart{
+    margin-right:70px;
+    margin-top:50px;
 }
 
 table{
@@ -42,6 +56,7 @@ th,td{
 
 label{
     font-family: 'Oswald', sans-serif;
+    color:rgb(218, 255, 255);
     padding-left : 0.9vw;
     padding-right: 1vw;
     padding-top: 1vh;
@@ -91,6 +106,7 @@ input:not(#sub){
     background-color: var(--clr-cont2);
     font-family:'Ubuntu', sans-serif;
     white-space: nowrap;
+    text-align: center;
     text-align: center;
     font-weight:bolder;
     width: wrap;

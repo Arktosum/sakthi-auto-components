@@ -26,8 +26,8 @@
     <script>
         $(function() {
             $('#toggle-one').bootstrapToggle({
-                on: 'Graph',
-                off: 'Pie Chart'
+                off: 'Graph',
+                on: 'Table'
             });
         })
     </script>
@@ -109,11 +109,11 @@
         <input type="date" name="date-to" id="date-to">
     </div>
     <input class = "toggle" type="checkbox" id="toggle-one">
-    <div style="display:flex;" id="chart-div">
+    <div id="chart-div">
         <div class="chart-div"><canvas id="daily-chart"></canvas></div>
         <div class="chart-div"><canvas id="attribute-chart"></canvas></div>
     </div>
-    <div style="display:none;" id="table-div">
+    <div  id="table-div">
     </div>
     
     <footer>Sakthi Auto Components Pvt. Ltd.</footer>

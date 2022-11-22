@@ -37,7 +37,7 @@ const chartEle = document.getElementById('daily-chart')
 const chartEle2 = document.getElementById('attribute-chart')
 const dateFrom = document.getElementById('date-from')
 const dateTo = document.getElementById('date-to')
-const toggleEle = document.getElementById('toggle-view')
+const toggleEle = document.getElementById('toggle-one')
 let currdate = new Date().toISOString().replace(/T.*/,'')
 // let currdate = '2022-11-15'
 let minMostDate = '2022-01-01'
@@ -70,10 +70,10 @@ let y =  [1,1,1,1,1]
 
 let piChartColors = [`rgba(255,0,0)`,`rgba(0,255,0,0.5)`,`rgba(0,0,255,0.5)`,`rgba(255,0,255,0.5)`,`rgba(0,255,255,0.5)`,`rgba(255,255,0,0.5)`]
 
-let config = getConfig('line',x,y,'KP%',`rgba(0,0,255,0.4)`,`rgba(0,255,0,0.5)`,`rgba(255,0,0,0.3)`)
+let config = getConfig('line',x,y,'KP%',`rgba(255,255,255,0.6)`,`rgba(0,255,0,0.6)`,`rgba(255,255,255,0.65)`)
 const chart = new Chart(chartEle,config)
 
-config = getConfig('doughnut',['RHSI','RMI','RQ','CC','PP','KAIZEN'],y,'KP%',piChartColors,`rgba(0,0,0,0)`,`rgba(255,0,0,0.3)`)
+config = getConfig('doughnut',['RHSI','RMI','RQ','CC','PP','KAIZEN'],y,'KP%',piChartColors,`rgba(255,0,0,0)`,`rgba(255,0,0,0.3)`)
 const attr_chart = new Chart(chartEle2,config)
 
 document.getElementById('logout-btn').onclick = ()=>{
